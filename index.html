@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aurora Media — Design, Digital &amp; Motion</title>
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+
+<!-- Tailwind -->
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          obsidian: '#050505',
+          panel: '#0b0b0e',
+          cyan: '#00f3ff',
+          violet: '#ff0055',
+          cosmic: '#7a2bff',
+          emerald: '#00ffaa',
+          bone: '#F3F1EC',
+          dim: '#8A8A93',
+        },
+        fontFamily: {
+          display: ['"Bricolage Grotesque"', 'sans-serif'],
+          body: ['Inter', 'sans-serif'],
+          mono: ['"JetBrains Mono"', 'monospace'],
+        }
+      }
+    }
+  }
+</script>
+
+<!-- GSAP -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<!-- Lenis -->
+<script src="https://unpkg.com/@studio-freight/lenis@1.0.34/dist/lenis.min.js"></script>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body class="bg-obsidian grain overflow-x-hidden">
+<!-- ============ CYBERNETIC INTRO (combined fusion scene → particle burst → permanent centered logo) ============ -->
+<div id="cyber-intro" aria-hidden="true">
+
+  <!-- COMBINED SCENE · wallpaper backdrop + cyber eye + 3D spheres + HUD overlay -->
+  <div class="cyber-scene" id="scene-fusion">
+    <div class="fusion-bg" id="fusion-bg">
+      <img src="./imgs/wallpaper.jpeg" alt="">
+    </div>
+    <div class="fusion-glow"></div>
+
+    <div class="hud-grid"></div>
+    <div class="hud-corner c-tl"></div>
+    <div class="hud-corner c-tr"></div>
+    <div class="hud-corner c-bl"></div>
+    <div class="hud-corner c-br"></div>
+
+    <!-- <div class="hud-readout ro-1">SYS.AURORA // SEC-CLEARANCE 7</div>
+    <div class="hud-readout ro-2">GRID 04 · NODE 117</div> -->
+
+    <div class="hud-graph">
+      <svg viewBox="0 0 220 70" preserveAspectRatio="none">
+        <path class="g-axis" d="M0 68 H220"/>
+        <path class="g-axis" d="M0 68 V0"/>
+        <polyline class="g-line" points="0,60 22,54 44,58 66,44 88,50 110,36 132,42 154,24 176,32 198,16 220,10"/>
+      </svg>
+    </div>
+
+    <div class="fusion-center">
+      <div class="cyber-glow"></div>
+      <div class="eye-hud" id="eye-hud" aria-hidden="true">
+        <svg class="eh-rings" viewBox="0 0 100 100">
+          <defs>
+            <linearGradient id="hudGrad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#00f3ff"/><stop offset="100%" stop-color="#ff0055"/>
+            </linearGradient>
+          </defs>
+          <circle class="eh-1" cx="50" cy="50" r="48"/>
+          <circle class="eh-2" cx="50" cy="50" r="42"/>
+          <circle class="eh-3" cx="50" cy="50" r="36"/>
+          <path class="eh-sweep" d="M50 50 m0 -48 a48 48 0 1 1 -0.01 0"/>
+        </svg>
+        <svg id="scan-gauge" viewBox="0 0 100 100">
+          <circle class="gg-track" cx="50" cy="50" r="48"/>
+          <circle class="gg-prog" id="scan-gauge-prog" cx="50" cy="50" r="48"/>
+        </svg>
+      </div>
+      <div class="cyber-eye-wrap" id="cyber-eye-wrap">
+        <img id="cyber-eye-img" src="./imgs/cyber-eye.png" alt="Biometric iris scan">
+        <div class="scan-beam"></div>
+      </div>
+      <div class="sphere-orb" id="sphere-pc-orb">
+        <img class="sphere" id="sphere-pc" src="./imgs/point-cloud-sphere.jpeg" alt="">
+      </div>
+      <div class="sphere-orb" id="sphere-mesh-orb">
+        <img class="sphere" id="sphere-mesh" src="./imgs/mesh-sphere-3d.png" alt="">
+      </div>
+      <div class="reticle">
+        <span class="ring r1"></span>
+        <span class="ring r2"></span>
+        <span class="ring r3"></span>
+        <span class="cross-h"></span>
+        <span class="cross-v"></span>
+      </div>
+      <div id="burst-flash"></div>
+      <div id="burst-layer"></div>
+    </div>
+
+    <div class="hud-progress">
+      <!-- <div class="hud-progress-label"><span>RETINA MATCH</span><span class="hud-progress-pct"><b id="scan-progress-pct">000</b><em>%</em></span></div> -->
+      <div class="hud-progress-bar"><span id="scan-progress-fill"></span></div>
+    </div>
+
+  </div>
+
+  <!-- PERMANENT centered logo stage (revealed from within the particle burst) -->
+  <div id="logo-stage">
+    <div id="logo-tilt">
+      <div id="logo-spin">
+        <div class="logo-slot">
+          <svg class="logo-slot-ring" viewBox="0 0 100 100">
+            <defs>
+              <linearGradient id="ringGrad" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#00f3ff"/><stop offset="100%" stop-color="#ff0055"/>
+              </linearGradient>
+            </defs>
+            <circle class="ring-solid" cx="50" cy="50" r="48"/>
+            <circle class="ring-dashed" cx="50" cy="50" r="41"/>
+            <circle class="ring-outer" cx="50" cy="50" r="33"/>
+          </svg>
+          <div class="logo-slot-fill">
+            <img id="brand-logo" src="./imgs/logo-2k-without-background.png" alt="Aurora Media logo">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="logo-fx"></div>
+  </div>
+
+</div>
+<!-- ============ NAV ============ -->
+<header class="fixed top-0 left-0 w-full z-50 px-6 md:px-10 py-5 flex items-center justify-between">
+  <div class="font-display font-semibold tracking-tight text-lg">
+    AURORA <span class="text-dim font-normal text-sm align-top">MEDIA</span>
+  </div>
+  <nav class="hidden md:flex items-center gap-8 font-mono text-xs uppercase tracking-widest text-bone/80">
+    <a href="#services" class="nav-link">Services</a>
+    <a href="#video" class="nav-link">Motion</a>
+    <a href="#contact" class="nav-link">Contact</a>
+  </nav>
+  <a href="#contact" class="neon-ghost hidden md:inline-block font-mono text-xs uppercase tracking-widest border border-bone/25 px-4 py-2 rounded-full hover:border-cyan/60 hover:text-cyan transition-colors">
+    Start a project
+  </a>
+</header>
+
+<!-- ============ HERO ============ -->
+<section id="hero" class="relative min-h-[100svh] flex flex-col justify-center perspective overflow-hidden">
+
+  <div class="orb w-[38rem] h-[38rem] bg-cosmic/40 -top-40 -left-40"></div>
+  <div class="orb w-[30rem] h-[30rem] bg-violet/30 top-1/3 right-0"></div>
+  <div class="orb w-[24rem] h-[24rem] bg-cyan/20 bottom-0 left-1/4"></div>
+
+  <!-- Floating creative assets -->
+  <div id="hero-floaters" class="absolute inset-0 pointer-events-none">
+
+    <!-- Camera lens -->
+    <div class="floater" data-depth="0.6" style="top:14%; left:8%; width:110px;">
+      <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="lensG" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#00f3ff"/><stop offset="100%" stop-color="#ff0055"/>
+        </linearGradient></defs>
+        <circle cx="60" cy="60" r="52" stroke="url(#lensG)" stroke-width="1.4" opacity="0.85"/>
+        <circle cx="60" cy="60" r="38" stroke="url(#lensG)" stroke-width="1" opacity="0.6"/>
+        <circle cx="60" cy="60" r="22" stroke="url(#lensG)" stroke-width="1.2" opacity="0.9"/>
+        <circle cx="60" cy="60" r="6" fill="url(#lensG)" opacity="0.7"/>
+        <path d="M60 8 L60 22 M60 98 L60 112 M8 60 L22 60 M98 60 L112 60" stroke="#00f3ff" stroke-width="0.8" opacity="0.4"/>
+      </svg>
+    </div>
+
+    <!-- Color palette -->
+    <div class="floater" data-depth="0.35" style="top:58%; left:14%; width:120px;">
+      <svg viewBox="0 0 140 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M70 4C33 4 4 30 4 60c0 18 14 26 28 26 6 0 9-4 9-9 0-4-3-6-3-11 0-8 7-13 16-13h20c17 0 30-12 30-27C104 15 90 4 70 4z" stroke="#ff0055" stroke-width="1.3" opacity="0.85"/>
+        <circle cx="34" cy="34" r="8" fill="#00f3ff" opacity="0.85"/>
+        <circle cx="66" cy="20" r="8" fill="#ff0055" opacity="0.85"/>
+        <circle cx="96" cy="34" r="8" fill="#7a2bff" opacity="0.85"/>
+        <circle cx="24" cy="62" r="8" fill="#F3F1EC" opacity="0.5"/>
+      </svg>
+    </div>
+
+    <!-- Typography glyph -->
+    <div class="floater" data-depth="0.5" style="top:10%; right:10%; width:150px;">
+      <svg viewBox="0 0 200 140" xmlns="http://www.w3.org/2000/svg">
+        <text x="0" y="110" font-family="'Bricolage Grotesque', sans-serif" font-size="130" font-weight="700" fill="none" stroke="#00f3ff" stroke-width="1" opacity="0.7">Aa</text>
+      </svg>
+    </div>
+
+    <!-- UI wireframe block -->
+    <div class="floater" data-depth="0.45" style="top:66%; right:16%; width:150px;">
+      <svg viewBox="0 0 160 110" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="2" y="2" width="156" height="106" rx="8" stroke="#ff0055" stroke-width="1" opacity="0.7"/>
+        <rect x="14" y="16" width="40" height="8" rx="2" fill="#00f3ff" opacity="0.6"/>
+        <rect x="14" y="34" width="132" height="1" fill="#F3F1EC" opacity="0.25"/>
+        <rect x="14" y="48" width="60" height="46" rx="4" stroke="#00f3ff" stroke-width="0.8" opacity="0.5"/>
+        <rect x="84" y="48" width="62" height="20" rx="4" stroke="#7a2bff" stroke-width="0.8" opacity="0.6"/>
+        <rect x="84" y="74" width="62" height="20" rx="4" stroke="#7a2bff" stroke-width="0.8" opacity="0.6"/>
+      </svg>
+    </div>
+
+    <!-- Cursor arrow -->
+    <div class="floater" data-depth="0.7" style="top:36%; right:34%; width:46px;">
+      <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M6 4 L34 20 L20 22 L26 34 L20 36 L14 24 L6 30 Z" fill="#00f3ff" opacity="0.9"/>
+      </svg>
+    </div>
+
+    <!-- Glow chart -->
+    <div class="floater" data-depth="0.3" style="bottom:8%; right:8%; width:170px;">
+      <svg viewBox="0 0 180 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="chartFill" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#ff0055" stop-opacity="0.5"/><stop offset="100%" stop-color="#ff0055" stop-opacity="0"/>
+        </linearGradient></defs>
+        <polyline points="4,80 34,64 60,70 90,40 120,48 150,14 176,20" fill="none" stroke="#ff0055" stroke-width="2"/>
+        <polygon points="4,80 34,64 60,70 90,40 120,48 150,14 176,20 176,96 4,96" fill="url(#chartFill)"/>
+      </svg>
+    </div>
+  </div>
+
+  <div class="relative z-10 px-6 md:px-10">
+    <div id="hero-logo-slot"></div>
+    <p class="font-mono text-xs md:text-sm tracking-[0.3em] text-cyan/80 uppercase mb-6">
+      Creative Studio — Est. Signals of Motion
+    </p>
+    <h1 class="font-display font-semibold leading-[0.92] text-[13vw] md:text-[7.2vw] tracking-tight">
+      <span class="block text-bone">Ideas that</span>
+      <span class="block text-aurora">tumble into</span>
+      <span class="block stroke-text">motion.</span>
+    </h1>
+    <p class="max-w-md mt-8 text-dim text-base md:text-lg font-body">
+      Aurora Media builds brand systems, digital campaigns and video that move —
+      twelve disciplines, one studio, gliding across your scroll.
+    </p>
+    <div class="mt-10 flex items-center gap-5">
+      <a href="#services" class="cta-btn font-mono text-xs uppercase tracking-widest px-6 py-3.5 rounded-full font-medium">
+        View the work
+      </a>
+      <a href="#contact" class="neon-ghost font-mono text-xs uppercase tracking-widest text-bone/70 hover:text-cyan transition-colors">
+        Book a call →
+      </a>
+    </div>
+  </div>
+
+  <div class="absolute bottom-8 left-6 md:left-10 font-mono text-[10px] tracking-widest text-dim uppercase flex items-center gap-2">
+    <span class="w-1.5 h-1.5 rounded-full bg-cyan animate-pulse"></span> Scroll to unfold
+  </div>
+</section>
+
+<!-- ============ MARQUEE ============ -->
+<section id="marquee-sec" class="neon-divider relative border-y border-bone/10 py-5 overflow-hidden">
+  <div id="marquee" class="flex whitespace-nowrap font-display text-3xl md:text-5xl gap-10 text-bone/15">
+    <span>Branding — Digital Design — Paid Ads — Packaging — Strategy — Video Editing — </span>
+    <span>Branding — Digital Design — Paid Ads — Packaging — Strategy — Video Editing — </span>
+  </div>
+</section>
+
+<!-- ============ SERVICES (natural flow ×12) ============ -->
+<section id="services" class="relative">
+  <!-- 12 full-screen service blocks in normal document flow (injected by main.js); each reveals as it scrolls into view -->
+  <div id="services-snap"></div>
+  <nav id="svc-dots" aria-label="Services navigation"></nav>
+  <div id="svc-counter"><b>01</b> / 12</div>
+</section>
+
+<!-- ============ VIDEO EDITING SHOWCASE ============ -->
+<section id="video" class="relative py-32 md:py-44 px-6 md:px-10 overflow-hidden border-t border-bone/10">
+
+  <div class="orb w-[30rem] h-[30rem] bg-cosmic/30 bottom-0 left-0"></div>
+
+  <div id="video-floaters" class="absolute inset-0 pointer-events-none">
+    <!-- Film strip -->
+    <div class="floater" data-depth="0.4" style="top:12%; left:6%; width:220px;">
+      <svg viewBox="0 0 260 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="2" y="2" width="256" height="86" rx="6" stroke="#00f3ff" stroke-width="1" opacity="0.7"/>
+        <g fill="#050505" stroke="#00f3ff" stroke-width="0.7" opacity="0.7">
+          <rect x="12" y="10" width="10" height="10" rx="2"/><rect x="12" y="70" width="10" height="10" rx="2"/>
+          <rect x="12" y="40" width="10" height="10" rx="2"/>
+          <rect x="238" y="10" width="10" height="10" rx="2"/><rect x="238" y="70" width="10" height="10" rx="2"/>
+          <rect x="238" y="40" width="10" height="10" rx="2"/>
+        </g>
+        <rect x="34" y="14" width="60" height="62" rx="3" stroke="#ff0055" stroke-width="0.8" opacity="0.7"/>
+        <rect x="100" y="14" width="60" height="62" rx="3" stroke="#ff0055" stroke-width="0.8" opacity="0.5"/>
+        <rect x="166" y="14" width="60" height="62" rx="3" stroke="#ff0055" stroke-width="0.8" opacity="0.7"/>
+      </svg>
+    </div>
+
+    <!-- Play button -->
+    <div class="floater" data-depth="0.65" style="top:52%; right:12%; width:110px;">
+      <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="50" cy="50" r="46" stroke="#ff0055" stroke-width="1.3" opacity="0.85"/>
+        <path d="M42 34 L70 50 L42 66 Z" fill="#00f3ff" opacity="0.9"/>
+      </svg>
+    </div>
+
+    <!-- Keyframe timeline -->
+    <div class="floater" data-depth="0.3" style="bottom:10%; left:16%; width:220px;">
+      <svg viewBox="0 0 240 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <line x1="0" y1="20" x2="240" y2="20" stroke="#F3F1EC" stroke-opacity="0.2"/>
+        <g fill="#7a2bff" opacity="0.85">
+          <rect x="14" y="14" width="12" height="12" transform="rotate(45 20 20)"/>
+          <rect x="74" y="14" width="12" height="12" transform="rotate(45 80 20)"/>
+          <rect x="134" y="14" width="12" height="12" transform="rotate(45 140 20)"/>
+          <rect x="200" y="14" width="12" height="12" transform="rotate(45 206 20)"/>
+        </g>
+      </svg>
+    </div>
+  </div>
+
+  <div class="relative z-10 max-w-3xl reveal-on-scroll">
+    <p class="font-mono text-xs tracking-[0.3em] text-cyan/80 uppercase mb-4">Motion &amp; Video</p>
+    <h2 class="font-display font-semibold text-4xl md:text-6xl leading-[1.05] tracking-tight mb-6">
+      Every frame, <span class="text-aurora">cut on rhythm.</span>
+    </h2>
+    <p class="text-dim text-lg max-w-xl mb-10">
+      Our edit bay turns raw footage into paced, sound-designed stories —
+      social cuts, brand films and campaign trailers built frame by frame.
+    </p>
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-6 max-w-xl font-mono text-xs uppercase tracking-widest text-dim">
+      <div class="reveal-on-scroll" data-delay="200"><span class="block text-2xl font-display text-bone mb-1">4K/8K</span>Native delivery</div>
+      <div class="reveal-on-scroll" data-delay="300"><span class="block text-2xl font-display text-bone mb-1">120+</span>Cuts / year</div>
+      <div class="reveal-on-scroll" data-delay="400"><span class="block text-2xl font-display text-bone mb-1">24fps–60fps</span>Frame rates</div>
+      <div class="reveal-on-scroll" data-delay="500"><span class="block text-2xl font-display text-bone mb-1">A–Z</span>Story to sound</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTACT / CTA ============ -->
+<section id="contact" class="relative py-32 md:py-48 px-6 md:px-10 text-center overflow-hidden border-t border-bone/10">
+  <div class="orb w-[34rem] h-[34rem] bg-violet/25 top-0 left-1/2 -translate-x-1/2"></div>
+  <div class="relative z-10 reveal-on-scroll">
+    <p class="font-mono text-xs tracking-[0.3em] text-cyan/80 uppercase mb-6">Let's build</p>
+    <h2 class="font-display font-semibold text-[12vw] md:text-[6.5vw] leading-[0.95] tracking-tight">
+      <span class="text-aurora">Start the</span><br class="md:hidden"> <span class="stroke-text">next chapter.</span>
+    </h2>
+    <a href="mailto:hello@auroramedia.studio" class="cta-btn inline-block mt-10 font-mono text-xs uppercase tracking-widest px-8 py-4 rounded-full font-medium">
+      hello@auroramedia.studio
+    </a>
+  </div>
+</section>
+
+<footer class="px-6 md:px-10 py-10 border-t border-bone/10 flex flex-col md:flex-row items-center justify-between gap-4 text-dim font-mono text-[11px] uppercase tracking-widest">
+  <span>© 2026 Aurora Media Studio</span>
+  <span>Design · Digital · Motion</span>
+</footer>
+
+<script src="main.js"></script>
+</body>
+</html
