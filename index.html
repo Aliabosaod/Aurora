@@ -44,16 +44,121 @@
 
 <link rel="stylesheet" href="style.css">
 
+<style>
+  /* ============ INTRO · responsive wallpaper backdrop ============ */
+  .fusion-bg picture{ position:absolute; inset:0; }
+
+  /* ============ SECTION 2 · STRATEGY & MARKET RESEARCH DASHBOARD ============ */
+  #strategy{ background:linear-gradient(180deg, #214373 0%, #202576 45%, #28124e 78%, #160a2e 100%); }
+
+  /* UPPER · full-width hero banner (title only, no overlays) */
+  #strategy .strat-hero{
+    position:relative;
+    width:100%;
+    /* min-height:130vh; */
+    overflow:hidden;
+  }
+  #strategy .strat-hero picture{ position:absolute; inset:0; }
+  #strategy .strat-hero img{ width:100%; height:100%; object-fit:cover; filter:saturate(1.15) brightness(1); }
+  #strategy .strat-hero-title{ position:absolute; top:clamp(24px,6vh,64px); left:clamp(20px,5vw,72px);
+    margin:0; font-family:'Inter',sans-serif; font-weight:700; letter-spacing:-0.01em;
+    font-size:clamp(28px,4.6vw,60px); line-height:1.05; color:#ffffff;
+    text-shadow:0 2px 26px rgba(0,0,0,0.65); }
+
+  /* LOWER · dashboard on deep-blue → dark-purple gradient */
+  #strategy .strat-dash{ perspective:1200px;
+    padding:clamp(10px,0vw,72px) clamp(18px,4vw,64px) clamp(15px,0vw,88px);
+    background:linear-gradient(180deg, #214373 0%, #202576 45%, #28124e 78%, #160a2e 100%); }
+
+  #strategy .strat-grid-top,
+  #strategy .strat-grid-bottom{ display:grid; gap:clamp(6px,1.6vw,24px); }
+  #strategy .strat-grid-top{ grid-template-columns:repeat(4,1fr); }
+  #strategy .strat-grid-bottom{ grid-template-columns:repeat(3,1fr); max-width:76%; margin:clamp(10px,0vw,36px) auto 0; }
+
+  /* CARD · glowing rounded border + dark translucent body (title on top, PNG below) */
+  #strategy .strat-card{ position:relative; border-radius:20px;
+    /* background:rgba(10,14,28,0.52); -webkit-backdrop-filter:blur(6px); backdrop-filter:blur(6px);
+    border:1px solid var(--glow,#00f3ff);
+    box-shadow:0 0 16px var(--glow,#00f3ff), inset 0 0 26px var(--glow,#00f3ff);
+    transform-style:preserve-3d; will-change:transform;
+    animation:stratBorderPulse 3.2s ease-in-out infinite;
+    animation-delay:calc(var(--i,0) * 0.18s); */
+  }
+  /* @keyframes stratBorderPulse{
+    0%,100%{ box-shadow:0 0 12px var(--glow,#00f3ff), inset 0 0 20px var(--glow,#00f3ff); }
+    50%{ box-shadow:0 0 30px var(--glow,#00f3ff), inset 0 0 34px var(--glow,#00f3ff); }
+  } */
+  #strategy .strat-card-img{
+    position:relative;
+    border-radius:14px;
+    overflow:hidden;
+    /* background:rgba(255,255,255,0.04); */
+  }
+  #strategy .strat-card-img img{ display:block; width:100%; height:auto; object-fit:contain; border-radius:14px; }
+
+  /* tablet · 2×2 fallback before stacking */
+  @media (min-width: 769px) and (max-width: 1024px){
+    #strategy .strat-hero{ min-height:90vh; }
+    /* #strategy .strat-grid-top{ grid-template-columns:repeat(2,1fr); }
+    #strategy .strat-grid-bottom{ grid-template-columns:repeat(2,1fr); max-width:100%; margin-top:18px; } */
+  }
+  /* Base / Small Mobile (افتراضي للشاشات الصغيرة حتى 375px) */
+  #strategy .strat-hero {
+    min-height: 40vh;
+  }
+
+  /* Medium Mobile (من 376px وأكبر) */
+  @media (min-width: 376px) {
+    #strategy .strat-hero { min-height: 45vh; }
+  }
+
+  /* Large Mobile (من 426px وأكبر) */
+  @media (min-width: 426px) {
+    #strategy .strat-hero { min-height: 50vh; }
+  }
+
+  /* Tablet (من 769px وأكبر) */
+  @media (min-width: 769px) {
+    #strategy .strat-hero { min-height: 90vh; }
+  }
+  /* Tablet starting from 600px */
+  @media (min-width: 600px) {
+    #strategy .strat-hero { min-height: 90vh; }
+  }
+  /* Laptop / Desktop (من 1024px وأكبر) */
+  @media (min-width: 1024px) {
+    #strategy .strat-hero { min-height: 100vh; }
+  }
+  /* Large Laptop / Desktop (من 1360px وأكبر) */
+  @media (min-width: 1360px) {
+    #strategy .strat-hero { min-height: 130vh; }
+  }
+  /* MOBILE · cards stack neatly below the banner */
+  @media (max-width: 767px){
+    #strategy .strat-grid-top,
+    /* #strategy .strat-grid-bottom{ grid-template-columns:3fr; } */
+    #strategy .strat-grid-bottom{ max-width:100%; }
+    /* #strategy .strat-card{ padding:16px; } */
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    #strategy .strat-card{ animation:none !important; }
+  }
+</style>
+
 </head>
 
 <body class="bg-obsidian grain overflow-x-hidden">
 <!-- ============ CYBERNETIC INTRO (combined fusion scene → particle burst → permanent centered logo) ============ -->
 <div id="cyber-intro" aria-hidden="true">
 
-  <!-- COMBINED SCENE · wallpaper backdrop + cyber eye + 3D spheres + HUD overlay -->
+  <!-- COMBINED SCENE · wallpaper backdrop + cyber eye + HUD overlay -->
   <div class="cyber-scene" id="scene-fusion">
     <div class="fusion-bg" id="fusion-bg">
-      <img src="./imgs/wallpaper.jpeg" alt="">
+      <picture>
+        <source media="(max-width: 768px)" srcset="./imgs/intro-wallpaper-mobile.png">
+        <img src="./imgs/intro-wallpaper-desktop.jpeg" alt="">
+      </picture>
     </div>
     <div class="fusion-glow"></div>
 
@@ -62,9 +167,6 @@
     <div class="hud-corner c-tr"></div>
     <div class="hud-corner c-bl"></div>
     <div class="hud-corner c-br"></div>
-
-    <!-- <div class="hud-readout ro-1">SYS.AURORA // SEC-CLEARANCE 7</div>
-    <div class="hud-readout ro-2">GRID 04 · NODE 117</div> -->
 
     <div class="hud-graph">
       <svg viewBox="0 0 220 70" preserveAspectRatio="none">
@@ -97,12 +199,6 @@
         <img id="cyber-eye-img" src="./imgs/cyber-eye.png" alt="Biometric iris scan">
         <div class="scan-beam"></div>
       </div>
-      <div class="sphere-orb" id="sphere-pc-orb">
-        <img class="sphere" id="sphere-pc" src="./imgs/point-cloud-sphere.jpeg" alt="">
-      </div>
-      <div class="sphere-orb" id="sphere-mesh-orb">
-        <img class="sphere" id="sphere-mesh" src="./imgs/mesh-sphere-3d.png" alt="">
-      </div>
       <div class="reticle">
         <span class="ring r1"></span>
         <span class="ring r2"></span>
@@ -115,7 +211,7 @@
     </div>
 
     <div class="hud-progress">
-      <!-- <div class="hud-progress-label"><span>RETINA MATCH</span><span class="hud-progress-pct"><b id="scan-progress-pct">000</b><em>%</em></span></div> -->
+      <div class="hud-progress-label"><span>RETINA MATCH</span><span class="hud-progress-pct"><b id="scan-progress-pct">000</b><em>%</em></span></div>
       <div class="hud-progress-bar"><span id="scan-progress-fill"></span></div>
     </div>
 
@@ -126,16 +222,6 @@
     <div id="logo-tilt">
       <div id="logo-spin">
         <div class="logo-slot">
-          <svg class="logo-slot-ring" viewBox="0 0 100 100">
-            <defs>
-              <linearGradient id="ringGrad" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0%" stop-color="#00f3ff"/><stop offset="100%" stop-color="#ff0055"/>
-              </linearGradient>
-            </defs>
-            <circle class="ring-solid" cx="50" cy="50" r="48"/>
-            <circle class="ring-dashed" cx="50" cy="50" r="41"/>
-            <circle class="ring-outer" cx="50" cy="50" r="33"/>
-          </svg>
           <div class="logo-slot-fill">
             <img id="brand-logo" src="./imgs/logo-2k-without-background.png" alt="Aurora Media logo">
           </div>
@@ -236,31 +322,54 @@
 
   <div class="relative z-10 px-6 md:px-10">
     <div id="hero-logo-slot"></div>
-    <p class="font-mono text-xs md:text-sm tracking-[0.3em] text-cyan/80 uppercase mb-6">
-      Creative Studio — Est. Signals of Motion
-    </p>
-    <h1 class="font-display font-semibold leading-[0.92] text-[13vw] md:text-[7.2vw] tracking-tight">
-      <span class="block text-bone">Ideas that</span>
-      <span class="block text-aurora">tumble into</span>
-      <span class="block stroke-text">motion.</span>
-    </h1>
-    <p class="max-w-md mt-8 text-dim text-base md:text-lg font-body">
-      Aurora Media builds brand systems, digital campaigns and video that move —
-      twelve disciplines, one studio, gliding across your scroll.
-    </p>
-    <div class="mt-10 flex items-center gap-5">
-      <a href="#services" class="cta-btn font-mono text-xs uppercase tracking-widest px-6 py-3.5 rounded-full font-medium">
-        View the work
-      </a>
-      <a href="#contact" class="neon-ghost font-mono text-xs uppercase tracking-widest text-bone/70 hover:text-cyan transition-colors">
-        Book a call →
-      </a>
-    </div>
+  </div>
+</section>
+
+<!-- ============ SECTION 2 · STRATEGY & MARKET RESEARCH DASHBOARD ============ -->
+<section id="strategy" class="relative overflow-hidden">
+
+  <!-- UPPER · full-width hero banner -->
+  <div class="strat-hero">
+    <picture>
+      <source media="(max-width: 768px)" srcset="./imgs/wallpaper-page2.jpg">
+      <img src="./imgs/wallpaper-page2.jpg" alt="">
+    </picture>
   </div>
 
-  <div class="absolute bottom-8 left-6 md:left-10 font-mono text-[10px] tracking-widest text-dim uppercase flex items-center gap-2">
-    <span class="w-1.5 h-1.5 rounded-full bg-cyan animate-pulse"></span> Scroll to unfold
+  <!-- LOWER · interactive dashboard grid -->
+  <div class="strat-dash">
+
+    <!-- TOP ROW · 4 cards -->
+    <div class="strat-grid-top">
+      <article class="strat-card" style="--glow:#00f3ff; --i:0">
+        <div class="strat-card-img"><img src="./imgs/f2.png" alt="Market Research"></div>
+      </article>
+      <article class="strat-card" style="--glow:#ff2b4a; --i:1">
+        <div class="strat-card-img"><img src="./imgs/f4.png" alt="Competitor Analysis"></div>
+      </article>
+      <article class="strat-card" style="--glow:#3b6fff; --i:2">
+        <div class="strat-card-img"><img src="./imgs/f3.png" alt="Business Assessment"></div>
+      </article>
+      <article class="strat-card" style="--glow:#ffb01f; --i:3">
+        <div class="strat-card-img"><img src="./imgs/f5.png" alt="Market Opportunity Analysis"></div>
+      </article>
+    </div>
+
+    <!-- BOTTOM ROW · 3 cards -->
+    <div class="strat-grid-bottom">
+      <article class="strat-card" style="--glow:#a855f7; --i:4">
+        <div class="strat-card-img"><img src="./imgs/f7.png" alt="Strategic Recommendations"></div>
+      </article>
+      <article class="strat-card" style="--glow:#2dd4bf; --i:5">
+        <div class="strat-card-img"><img src="./imgs/f6.png" alt="Growth Consultation"></div>
+      </article>
+      <article class="strat-card" style="--glow:#ff3ec8; --i:6">
+        <div class="strat-card-img"><img src="./imgs/f1.png" alt="Business & Market Insights"></div>
+      </article>
+    </div>
+
   </div>
+
 </section>
 
 <!-- ============ MARQUEE ============ -->
@@ -361,5 +470,39 @@
 </footer>
 
 <script src="main.js"></script>
+<script>
+  /* ============ SECTION 2 · STRATEGY DASHBOARD entrance + tilt ============ */
+  (function(){
+    var strat = document.getElementById('strategy');
+    if(!strat || typeof gsap === 'undefined') return;
+    var cards = strat.querySelectorAll('.strat-card');
+    if(!cards.length) return;
+    if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    gsap.from('.strat-hero', {
+      autoAlpha: 0, scale: 1.05, duration: 1.1, ease: 'power2.out',
+      scrollTrigger: { trigger: '#strategy', start: 'top 80%', once: true }
+    });
+    gsap.from(cards, {
+      y: 36, autoAlpha: 0, scale: 0.94, duration: 0.7, stagger: 0.08, ease: 'power3.out',
+      scrollTrigger: { trigger: '.strat-dash', start: 'top 82%', once: true }
+    });
+
+    if(window.matchMedia('(pointer:fine)').matches){
+      cards.forEach(function(card){
+        var rx = gsap.quickTo(card, 'rotationX', { duration: 0.4, ease: 'power2.out' });
+        var ry = gsap.quickTo(card, 'rotationY', { duration: 0.4, ease: 'power2.out' });
+        card.addEventListener('pointermove', function(e){
+          var r = card.getBoundingClientRect();
+          var px = (e.clientX - r.left) / r.width;
+          var py = (e.clientY - r.top) / r.height;
+          ry((px - 0.5) * 10);
+          rx((0.5 - py) * 10);
+        });
+        card.addEventListener('pointerleave', function(){ rx(0); ry(0); });
+      });
+    }
+  })();
+</script>
 </body>
-</html
+</html>
