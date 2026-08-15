@@ -104,7 +104,12 @@
   }
   /* Base / Small Mobile (افتراضي للشاشات الصغيرة حتى 375px) */
   #strategy .strat-hero {
-    min-height: 40vh;
+    min-height: 30vh;
+  }
+
+  /* Small Mobile (من 360px وأكبر) */
+  @media (min-width: 365px) {
+    #strategy .strat-hero { min-height: 35vh; }
   }
 
   /* Medium Mobile (من 376px وأكبر) */
