@@ -95,6 +95,11 @@
     /* background:rgba(255,255,255,0.04); */
   }
   #strategy .strat-card-img img{ display:block; width:100%; height:auto; object-fit:contain; border-radius:14px; }
+  @keyframes cardImgFloat{
+    0%,100%{ transform:translateY(0) scale(1); }
+    50%{ transform:translateY(-4px) scale(1.015); }
+  }
+  .card-img-float{ animation:cardImgFloat 3.2s ease-in-out infinite; }
 
   /* tablet · 2×2 fallback before stacking */
   @media (min-width: 769px) and (max-width: 1024px){
@@ -104,22 +109,27 @@
   }
   /* Base / Small Mobile (افتراضي للشاشات الصغيرة حتى 375px) */
   #strategy .strat-hero {
-    min-height: 30vh;
+    min-height: 34vh;
+  }
+
+  /* Small Mobile (من 320px وأكبر) */
+  @media (min-width: 320px) {
+    #strategy .strat-hero { min-height: 43vh; }
   }
 
   /* Small Mobile (من 360px وأكبر) */
   @media (min-width: 365px) {
-    #strategy .strat-hero { min-height: 35vh; }
+    #strategy .strat-hero { min-height: 50vh; }
   }
 
   /* Medium Mobile (من 376px وأكبر) */
   @media (min-width: 376px) {
-    #strategy .strat-hero { min-height: 45vh; }
+    #strategy .strat-hero { min-height: 57vh; }
   }
 
   /* Large Mobile (من 426px وأكبر) */
   @media (min-width: 426px) {
-    #strategy .strat-hero { min-height: 50vh; }
+    #strategy .strat-hero { min-height: 60vh; }
   }
 
   /* Tablet (من 769px وأكبر) */
@@ -128,7 +138,7 @@
   }
   /* Tablet starting from 600px */
   @media (min-width: 600px) {
-    #strategy .strat-hero { min-height: 90vh; }
+    #strategy .strat-hero { min-height: 103vh; }
   }
   /* Laptop / Desktop (من 1024px وأكبر) */
   @media (min-width: 1024px) {
@@ -136,7 +146,7 @@
   }
   /* Large Laptop / Desktop (من 1360px وأكبر) */
   @media (min-width: 1360px) {
-    #strategy .strat-hero { min-height: 130vh; }
+    #strategy .strat-hero { min-height: 116vh; }
   }
   /* MOBILE · cards stack neatly below the banner */
   @media (max-width: 767px){
@@ -148,6 +158,7 @@
 
   @media (prefers-reduced-motion: reduce){
     #strategy .strat-card{ animation:none !important; }
+    .card-img-float{ animation:none !important; }
   }
 </style>
 
@@ -488,9 +499,20 @@
       autoAlpha: 0, scale: 1.05, duration: 1.1, ease: 'power2.out',
       scrollTrigger: { trigger: '#strategy', start: 'top 80%', once: true }
     });
-    gsap.from(cards, {
-      y: 36, autoAlpha: 0, scale: 0.94, duration: 0.7, stagger: 0.08, ease: 'power3.out',
+
+    gsap.set(cards, { y: 40, autoAlpha: 0 });
+    var dashTl = gsap.timeline({
       scrollTrigger: { trigger: '.strat-dash', start: 'top 82%', once: true }
+    });
+    dashTl.to(cards, {
+      y: 0, autoAlpha: 1, duration: 0.8, stagger: 0.12, ease: 'power3.out'
+    });
+    var imgs = strat.querySelectorAll('.strat-card-img');
+    dashTl.from(imgs, {
+      scale: 0.85, autoAlpha: 0, duration: 0.65, stagger: 0.12, ease: 'power2.out'
+    }, '-=0.4');
+    dashTl.call(function(){
+      imgs.forEach(function(el){ el.classList.add('card-img-float'); });
     });
 
     if(window.matchMedia('(pointer:fine)').matches){
