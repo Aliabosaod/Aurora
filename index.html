@@ -212,9 +212,10 @@
   /* ============ SECTION 3 · SERVICES OVERVIEW ============ */
   #services-overview{
     background:
-      radial-gradient(circle at 80% 10%, rgba(0,243,255,0.25) 0%, transparent 40%),
-      radial-gradient(circle at 20% 90%, rgba(230,0,255,0.2) 0%, transparent 40%),
-      linear-gradient(180deg, #1b2653 0%, #160a2e 100%);
+      radial-gradient(circle at 85% 15%, rgba(0,243,255,0.35) 0%, transparent 50%),
+      radial-gradient(circle at 15% 85%, rgba(230,0,255,0.3) 0%, transparent 50%),
+      radial-gradient(circle at 50% 50%, rgba(30,80,255,0.25) 0%, transparent 60%),
+      linear-gradient(180deg, #1b2653 0%, #0f0826 100%);
     padding:clamp(24px,5vw,80px) clamp(14px,3vw,64px);
     overflow:hidden;
   }
@@ -262,16 +263,20 @@
     box-shadow:0 0 32px color-mix(in srgb, var(--glow,#00f3ff) 50%, transparent),
                 inset 0 0 30px color-mix(in srgb, var(--glow,#00f3ff) 12%, transparent);
   }
-  .so-card-text{ flex:1 1 55%; min-width:0; }
+  .so-card-text{ flex:1 1 55%; min-width:0; overflow:hidden; }
   .so-card-name{
     font-family:'Inter',sans-serif; font-weight:700; color:#fff;
-    font-size:clamp(12px,1.6vw,22px); line-height:1.25; margin:0 0 clamp(6px,1vw,10px);
+    font-size:clamp(12px,3vw,22px); line-height:1.25; margin:0 0 clamp(4px,0.8vw,10px);
     letter-spacing:0.005em;
+    overflow:hidden; text-overflow:ellipsis;
+    display:-webkit-box; -webkit-box-orient:vertical; -webkit-line-clamp:2;
   }
   .so-card-desc{
     font-family:'Inter',sans-serif; font-weight:400;
-    color:rgba(255,255,255,0.85); font-size:clamp(10px,2.8vw,15px);
-    line-height:1.55; margin:0;
+    color:rgba(255,255,255,0.85); font-size:clamp(9px,2.2vw,15px);
+    line-height:1.5; margin:0;
+    overflow:hidden; text-overflow:ellipsis;
+    display:-webkit-box; -webkit-box-orient:vertical; -webkit-line-clamp:4;
   }
   .so-card-img{
     flex:0 0 auto; width:clamp(70px,12vw,170px); margin-left:clamp(8px,1.5vw,24px);
@@ -292,10 +297,10 @@
 
   /* ultra-small screens (320-374px) — tighter spacing, 2-col preserved */
   @media (max-width:374px){
-    .so-card{ padding:clamp(8px,2vw,12px); flex-direction:row; gap:8px; }
-    .so-card-name{ font-size:clamp(11px,3.2vw,13px); margin-bottom:4px; }
-    .so-card-desc{ font-size:clamp(9px,2.8vw,11px); line-height:1.45; }
-    .so-card-img{ width:clamp(56px,16vw,80px); margin-left:6px; }
+    .so-card{ padding:clamp(6px,2vw,10px); flex-direction:row; gap:6px; }
+    .so-card-name{ font-size:clamp(10px,3vw,13px); margin-bottom:3px; -webkit-line-clamp:1; }
+    .so-card-desc{ font-size:clamp(8px,2.2vw,11px); line-height:1.4; -webkit-line-clamp:3; }
+    .so-card-img{ width:clamp(48px,16vw,72px); margin-left:5px; }
   }
 
   @media (prefers-reduced-motion: reduce){
