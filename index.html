@@ -53,17 +53,60 @@
 
   /* UPPER · full-width hero banner (title only, no overlays) */
   #strategy .strat-hero{
-    position:relative;
-    width:100%;
+    /* position:relative;
+    width:100%; */
     /* min-height:130vh; */
-    overflow:hidden;
+    /* overflow:hidden;
+    position: relative; */
+  width: 100%;
+  /* نفس الـ Padding الجانبي الخاص بالـ strat-dash عشان توازي العناصر تماماً */
+  padding-left: clamp(18px, 4vw, 64px);
+  padding-right: clamp(18px, 4vw, 64px);
+  padding-top: clamp(20px, 4vh, 48px);
+  box-sizing: border-box;
   }
-  #strategy .strat-hero picture{ position:absolute; inset:0; }
-  #strategy .strat-hero img{ width:100%; height:100%; object-fit:cover; filter:saturate(1.15) brightness(1); }
-  #strategy .strat-hero-title{ position:absolute; top:clamp(24px,6vh,64px); left:clamp(20px,5vw,72px);
-    margin:0; font-family:'Inter',sans-serif; font-weight:700; letter-spacing:-0.01em;
-    font-size:clamp(28px,4.6vw,60px); line-height:1.05; color:#ffffff;
-    text-shadow:0 2px 26px rgba(0,0,0,0.65); }
+  #strategy .strat-hero picture{
+    /* position:absolute; inset:0; */
+    position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 20px; /* لتقويس الحواف لتتناسب مع أسلوب الكروت */
+  overflow: hidden;
+  }
+  #strategy .strat-hero img{
+    /* width:100%;
+    height:100%; */
+    /* object-fit:cover; */
+    /* filter:saturate(1.15) brightness(1); */
+    display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 20px;
+  filter: saturate(1.15) brightness(1);
+  }
+  #strategy .strat-hero-title{
+    /* position:absolute; top:clamp(24px,6vh,64px);
+    left:clamp(20px,5vw,72px);
+    margin:0; font-family:'Inter',sans-serif;
+    font-weight:700; letter-spacing:-0.01em;
+    font-size:clamp(28px,4.6vw,60px);
+    line-height:1.05; color:#ffffff;
+    text-shadow:0 2px 26px rgba(0,0,0,0.65);
+    position: absolute; */
+  top: clamp(24px, 6vh, 64px);
+  left: calc(clamp(18px, 4vw, 64px) + 20px); /* إضافة محاذاة الهامش الداخلي */
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  font-size: clamp(28px, 4.6vw, 60px);
+  line-height: 1.05;
+  color: #ffffff;
+  text-shadow: 0 2px 26px rgba(0, 0, 0, 0.65);
+  z-index: 2;
+  }
 
   /* LOWER · dashboard on deep-blue → dark-purple gradient */
   #strategy .strat-dash{ perspective:1200px;
@@ -107,47 +150,52 @@
     /* #strategy .strat-grid-top{ grid-template-columns:repeat(2,1fr); }
     #strategy .strat-grid-bottom{ grid-template-columns:repeat(2,1fr); max-width:100%; margin-top:18px; } */
   }
-  /* Base / Small Mobile (افتراضي للشاشات الصغيرة حتى 375px) */
+  /* =========================================================
+   REFINED RESPONSIVE STRATEGY HERO BANNER
+   ========================================================= */
+
+/* Base Style (All Devices) */
+#strategy .strat-hero {
+  /* width: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative; */
+  
+  /* Mobile Default (حجم هيدر الموبايل المرن) */
+  /* min-height: 45dvh; dvh بتتأقلم تلقائياً مع شريط متصفح الموبايل */
+  /* aspect-ratio: 16 / 9; يحافظ على نسبة أبعاد الصورة على الهواتف */
+}
+
+/* 1. Small & Medium Mobile (حتى 480px) */
+@media (max-width: 480px) {
   #strategy .strat-hero {
-    min-height: 34vh;
+    padding-left: 18px;
+    padding-right: 18px;
   }
+}
 
-  /* Small Mobile (من 320px وأكبر) */
-  @media (min-width: 320px) {
-    #strategy .strat-hero { min-height: 43vh; }
+@media (min-width: 1024px) {
+  #strategy .strat-hero {
+    /* للحفاظ على محاذاة الصورة بالشاشات العريضة جداً */
+    max-width: 100%;
   }
+}
+/* 2. Tablets (من 600px إلى 1023px) */
+/* @media (min-width: 600px) and (max-width: 1023px) {
+  #strategy .strat-hero {
+    min-height: 60dvh;
+    aspect-ratio: 16 / 11;
+  }
+} */
 
-  /* Small Mobile (من 360px وأكبر) */
-  @media (min-width: 365px) {
-    #strategy .strat-hero { min-height: 50vh; }
+/* 3. Laptops & Desktops (من 1024px وأكبر) */
+/* @media (min-width: 1024px) {
+  #strategy .strat-hero {
+    min-height: 100vh;
+    aspect-ratio: auto;
   }
-
-  /* Medium Mobile (من 376px وأكبر) */
-  @media (min-width: 376px) {
-    #strategy .strat-hero { min-height: 57vh; }
-  }
-
-  /* Large Mobile (من 426px وأكبر) */
-  @media (min-width: 426px) {
-    #strategy .strat-hero { min-height: 60vh; }
-  }
-
-  /* Tablet (من 769px وأكبر) */
-  @media (min-width: 769px) {
-    #strategy .strat-hero { min-height: 90vh; }
-  }
-  /* Tablet starting from 600px */
-  @media (min-width: 600px) {
-    #strategy .strat-hero { min-height: 103vh; }
-  }
-  /* Laptop / Desktop (من 1024px وأكبر) */
-  @media (min-width: 1024px) {
-    #strategy .strat-hero { min-height: 100vh; }
-  }
-  /* Large Laptop / Desktop (من 1360px وأكبر) */
-  @media (min-width: 1360px) {
-    #strategy .strat-hero { min-height: 116vh; }
-  }
+} */
   /* MOBILE · cards stack neatly below the banner */
   @media (max-width: 767px){
     #strategy .strat-grid-top,
