@@ -208,6 +208,100 @@
     #strategy .strat-card{ animation:none !important; }
     .card-img-float{ animation:none !important; }
   }
+
+  /* ============ SECTION 3 · SERVICES OVERVIEW ============ */
+  #services-overview{
+    background:
+      radial-gradient(circle at 80% 10%, rgba(0,243,255,0.25) 0%, transparent 40%),
+      radial-gradient(circle at 20% 90%, rgba(230,0,255,0.2) 0%, transparent 40%),
+      linear-gradient(180deg, #1b2653 0%, #160a2e 100%);
+    padding:clamp(24px,5vw,80px) clamp(14px,3vw,64px);
+    overflow:hidden;
+  }
+  .so-header{ margin-bottom:clamp(20px,3.5vw,56px); }
+  .so-title{
+    font-family:'Inter',sans-serif; font-weight:700; color:#fff;
+    font-size:clamp(24px,5vw,56px); line-height:1.1; letter-spacing:-0.01em; margin:0;
+  }
+  .so-subtitle{
+    font-family:'Inter',sans-serif; font-weight:500;
+    color:#00f3ff; font-size:clamp(14px,2.5vw,28px); line-height:1.3;
+    margin:6px 0 0; letter-spacing:0.01em;
+  }
+  .so-divider{
+    margin-top:14px; width:60px; height:2px; border:none;
+    background:linear-gradient(90deg, #00f3ff, #ff0055);
+    box-shadow:0 0 12px rgba(0,243,255,0.55), 0 0 24px rgba(255,0,85,0.3);
+    border-radius:2px;
+  }
+  .so-grid{
+    display:grid; grid-template-columns:repeat(2,1fr);
+    gap:clamp(10px,1.8vw,24px);
+  }
+  .so-card{
+    position:relative; display:flex; align-items:center;
+    border-radius:clamp(10px,2vw,20px); padding:clamp(12px,2vw,28px);
+    background:rgba(10,14,28,0.65);
+    -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px);
+    border:1px solid color-mix(in srgb, var(--glow,#00f3ff) 35%, transparent);
+    box-shadow:0 0 18px color-mix(in srgb, var(--glow,#00f3ff) 20%, transparent),
+                inset 0 0 24px color-mix(in srgb, var(--glow,#00f3ff) 6%, transparent);
+    transform:translate3d(0,0,0) translateY(40px);
+    opacity:0;
+    transition:transform 0.8s cubic-bezier(0.22,1,0.36,1), opacity 0.8s cubic-bezier(0.22,1,0.36,1),
+                box-shadow 0.4s ease;
+    transition-delay:calc(var(--si,0) * 0.12s);
+    will-change:transform, opacity;
+    backface-visibility:hidden;
+  }
+  .so-card.is-revealed{
+    transform:translate3d(0,0,0) translateY(0);
+    opacity:1;
+  }
+  .so-card:hover{
+    box-shadow:0 0 32px color-mix(in srgb, var(--glow,#00f3ff) 50%, transparent),
+                inset 0 0 30px color-mix(in srgb, var(--glow,#00f3ff) 12%, transparent);
+  }
+  .so-card-text{ flex:1 1 55%; min-width:0; }
+  .so-card-name{
+    font-family:'Inter',sans-serif; font-weight:700; color:#fff;
+    font-size:clamp(12px,1.6vw,22px); line-height:1.25; margin:0 0 clamp(6px,1vw,10px);
+    letter-spacing:0.005em;
+  }
+  .so-card-desc{
+    font-family:'Inter',sans-serif; font-weight:400;
+    color:rgba(255,255,255,0.85); font-size:clamp(10px,2.8vw,15px);
+    line-height:1.55; margin:0;
+  }
+  .so-card-img{
+    flex:0 0 auto; width:clamp(70px,12vw,170px); margin-left:clamp(8px,1.5vw,24px);
+    border-radius:clamp(8px,1.2vw,16px); overflow:hidden;
+    transform:translate3d(0,0,0) scale(0.85); opacity:0;
+    transition:transform 0.65s cubic-bezier(0.22,1,0.36,1), opacity 0.65s cubic-bezier(0.22,1,0.36,1);
+    transition-delay:calc(0.3s + var(--si,0) * 0.12s);
+    will-change:transform, opacity;
+    backface-visibility:hidden;
+  }
+  .so-card.is-revealed .so-card-img{
+    transform:translate3d(0,0,0) scale(1);
+    opacity:1;
+  }
+  .so-card-img img{ display:block; width:100%; height:auto; border-radius:inherit; object-fit:contain; }
+  /* full-width 7th card */
+  .so-card--full{ grid-column:1 / -1; }
+
+  /* ultra-small screens (320-374px) — tighter spacing, 2-col preserved */
+  @media (max-width:374px){
+    .so-card{ padding:clamp(8px,2vw,12px); flex-direction:row; gap:8px; }
+    .so-card-name{ font-size:clamp(11px,3.2vw,13px); margin-bottom:4px; }
+    .so-card-desc{ font-size:clamp(9px,2.8vw,11px); line-height:1.45; }
+    .so-card-img{ width:clamp(56px,16vw,80px); margin-left:6px; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    #services-overview .so-card{ transition:none !important; opacity:1 !important; transform:none !important; }
+    #services-overview .so-card-img{ transition:none !important; opacity:1 !important; transform:none !important; }
+  }
 </style>
 
 </head>
@@ -436,6 +530,75 @@
 
 </section>
 
+<!-- ============ SECTION 3 · SERVICES OVERVIEW ============ -->
+<section id="services-overview">
+  <div class="so-header">
+    <h2 class="so-title">Strategy &amp; Market Research</h2>
+    <p class="so-subtitle">Service Overview</p>
+    <hr class="so-divider">
+  </div>
+
+  <div class="so-grid">
+
+    <article class="so-card" style="--glow:#9d00ff; --si:0">
+      <div class="so-card-text">
+        <h3 class="so-card-name">Strategic Recommendations</h3>
+        <p class="so-card-desc">We transform research and analysis into clear strategic recommendations designed to guide decisions, strengthen positioning, and support long-term objectives.</p>
+      </div>
+      <div class="so-card-img"><img src="./imgs/f1.png" alt="Strategic Recommendations" decoding="async" loading="eager"></div>
+    </article>
+
+    <article class="so-card" style="--glow:#ff0055; --si:1">
+      <div class="so-card-text">
+        <h3 class="so-card-name">Competitor Analysis</h3>
+        <p class="so-card-desc">We evaluate competitors, their positioning, strengths, weaknesses, strategies, and market presence to identify competitive advantages and areas of opportunity.</p>
+      </div>
+      <div class="so-card-img"><img src="./imgs/f2.png" alt="Competitor Analysis" decoding="async" loading="eager"></div>
+    </article>
+
+    <article class="so-card" style="--glow:#00f3ff; --si:2">
+      <div class="so-card-text">
+        <h3 class="so-card-name">Market Research</h3>
+        <p class="so-card-desc">We study market conditions, customer behavior, industry trends, and emerging developments to provide the intelligence needed for informed business decisions.</p>
+      </div>
+      <div class="so-card-img"><img src="./imgs/f3.png" alt="Market Research" decoding="async" loading="eager"></div>
+    </article>
+
+    <article class="so-card" style="--glow:#ff8c00; --si:3">
+      <div class="so-card-text">
+        <h3 class="so-card-name">Market Opportunity Analysis</h3>
+        <p class="so-card-desc">We identify promising market gaps, customer needs, emerging trends, and expansion opportunities that can support sustainable business growth.</p>
+      </div>
+      <div class="so-card-img"><img src="./imgs/f4.png" alt="Market Opportunity Analysis" decoding="async" loading="eager"></div>
+    </article>
+
+    <article class="so-card" style="--glow:#1e50ff; --si:4">
+      <div class="so-card-text">
+        <h3 class="so-card-name">Business Assessment</h3>
+        <p class="so-card-desc">We assess the current position, capabilities, challenges, and performance of the business to identify areas that can be strengthened or improved.</p>
+      </div>
+      <div class="so-card-img"><img src="./imgs/f5.png" alt="Business Assessment" decoding="async" loading="eager"></div>
+    </article>
+
+    <article class="so-card" style="--glow:#00ffd5; --si:5">
+      <div class="so-card-text">
+        <h3 class="so-card-name">Growth Consultation</h3>
+        <p class="so-card-desc">We provide strategic guidance focused on identifying growth priorities, overcoming business challenges, and developing practical pathways for expansion.</p>
+      </div>
+      <div class="so-card-img"><img src="./imgs/f7.png" alt="Growth Consultation" decoding="async" loading="eager"></div>
+    </article>
+
+    <article class="so-card so-card--full" style="--glow:#e600ff; --si:6">
+      <div class="so-card-text">
+        <h3 class="so-card-name">Business &amp; Market Insights</h3>
+        <p class="so-card-desc">We combine business intelligence and market information to provide clear insights that support stronger planning, positioning, and decision-making.</p>
+      </div>
+      <div class="so-card-img"><img src="./imgs/f6.png" alt="Business & Market Insights" decoding="async" loading="eager"></div>
+    </article>
+
+  </div>
+</section>
+
 <!-- ============ MARQUEE ============ -->
 <section id="marquee-sec" class="neon-divider relative border-y border-bone/10 py-5 overflow-hidden">
   <div id="marquee" class="flex whitespace-nowrap font-display text-3xl md:text-5xl gap-10 text-bone/15">
@@ -573,6 +736,46 @@
           var py = (e.clientY - r.top) / r.height;
           ry((px - 0.5) * 10);
           rx((0.5 - py) * 10);
+        });
+        card.addEventListener('pointerleave', function(){ rx(0); ry(0); });
+      });
+    }
+  })();
+</script>
+<script>
+  /* ============ SECTION 3 · SERVICES OVERVIEW · reveal + tilt ============ */
+  (function(){
+    var sec = document.getElementById('services-overview');
+    if(!sec) return;
+    var cards = sec.querySelectorAll('.so-card');
+    if(!cards.length) return;
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(reduceMotion){
+      cards.forEach(function(c){ c.classList.add('is-revealed'); });
+      return;
+    }
+
+    var observer = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          entry.target.classList.add('is-revealed');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { rootMargin:'0px 0px -50px 0px', threshold:0 });
+
+    cards.forEach(function(card){ observer.observe(card); });
+
+    if(window.matchMedia('(pointer:fine)').matches){
+      cards.forEach(function(card){
+        var rx = gsap.quickTo(card, 'rotationX', { duration:0.5, ease:'power2.out' });
+        var ry = gsap.quickTo(card, 'rotationY', { duration:0.5, ease:'power2.out' });
+        card.addEventListener('pointermove', function(e){
+          var r = card.getBoundingClientRect();
+          var px = (e.clientX - r.left) / r.width;
+          var py = (e.clientY - r.top) / r.height;
+          ry((px - 0.5) * 8);
+          rx((0.5 - py) * 8);
         });
         card.addEventListener('pointerleave', function(){ rx(0); ry(0); });
       });
