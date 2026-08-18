@@ -236,8 +236,11 @@
     border-radius:2px;
   }
   .so-grid{
-    display:grid; grid-template-columns:repeat(2,1fr);
+    display:grid;
+    justify-content: center;
     gap:clamp(10px,1.8vw,24px);
+    /* grid-template-columns:repeat(2,1fr); */
+    grid-template-columns: repeat(2, minmax(0, 1fr)); /* 👈 هنا التعديل الجوهري */
   }
   .so-card{
     position:relative; display:flex; align-items:center;
@@ -298,8 +301,8 @@
   /* ultra-small screens (320-374px) — tighter spacing, 2-col preserved */
   @media (max-width:374px){
     .so-card{ padding:clamp(6px,2vw,10px); flex-direction:row; gap:6px; }
-    .so-card-name{ font-size:clamp(10px,3vw,13px); margin-bottom:3px; -webkit-line-clamp:1; }
-    .so-card-desc{ font-size:clamp(8px,2.2vw,11px); line-height:1.4; -webkit-line-clamp:3; }
+    .so-card-name{ font-size:clamp(6px,3vw,13px); margin-bottom:3px; -webkit-line-clamp:2; }
+    .so-card-desc{ font-size:clamp(4px,2.2vw,11px); line-height:1.4; -webkit-line-clamp:4; }
     .so-card-img{ width:clamp(48px,16vw,72px); margin-left:5px; }
   }
 
